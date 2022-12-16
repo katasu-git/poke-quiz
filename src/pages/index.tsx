@@ -11,6 +11,18 @@ type PokeQuiz = {
 
 export default function Home() {
   const [pokeQuiz, setPokeQuiz] = useState<PokeQuiz | null>(null);
+  const [inputtedValue, setInputtedValue] = useState<string>("");
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setInputtedValue(event.target.value);
+  };
+
+  const kanaToHira = (str: string) => {
+    return str.replace(/[\u30a1-\u30f6]/g, function (match) {
+      var chr = match.charCodeAt(0) - 0x60;
+      return String.fromCharCode(chr);
+    });
+  };
 
   useEffect(() => {
     const inner = async () => {
@@ -62,6 +74,29 @@ export default function Home() {
             />
             <p>{pokeQuiz.name}</p>
             <p>{pokeQuiz.genus}</p>
+          </>
+        )}
+        <form onSubmit={() => {}}>
+          <label>
+            こたえ:
+            <input
+              type="text"
+              value={inputtedValue}
+              onChange={handleChange}
+              className="border"
+            />
+          </label>
+          {/*<input type="submit" value="Submit" />*/}
+        </form>
+        {pokeQuiz && (
+          <>
+            <div>
+              {kanaToHira(pokeQuiz.genus) === inputtedValue + "ぽけもん" ? (
+                <p>正解！</p>
+              ) : (
+                <p>不正解！</p>
+              )}
+            </div>
           </>
         )}
       </main>
