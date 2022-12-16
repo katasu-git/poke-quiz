@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: true,
+  reactStrictMode: false, // useEffectが2回実行されるのを防ぐ
   images: {
     domains: ["raw.githubusercontent.com"],
   },
